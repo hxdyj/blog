@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>npm package 开发指南-包内容篇 | Zorion Song</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    <link rel="icon" href="/favicon.ico">
+    <script>
+      var _hmt = _hmt || []; 
+      (function() { 
+      var hm = document.createElement("script"); 
+      hm.src = "https://scdn.yourbay.net/js/gesture.js"; 
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s); 
+      })(); 
+      </script>
+    <script>
+                var _hmt = _hmt || []; 
+                var s = document.getElementsByTagName("script")[0]; 
+                (function() { 
+                var hm = document.createElement('script'); 
+                hm.text = `
+                  var src = 'https://scdn.yourbay.net/js/eruda.min.js'
+                  if (
+                    !/eruda=true/.test(window.location) &&
+                    localStorage.getItem('active-eruda') != 'true'
+                  ){}else{
+                      var hm1 = document.createElement('script'); 
+                      hm1.src = src    
+                      //document.body.appendChild(hm1)
+                      s.parentNode.insertBefore(hm1,s)
+
+                      var hm2 = document.createElement('script'); 
+                      hm2.text = 'eruda.init();'  
+                      
+                      hm1.onload = ()=>{
+                        s.parentNode.insertBefore(hm2,s)
+                      }
+                      //document.body.appendChild(hm2)
+                  }
+    
+                `; 
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s); 
+                })(); 
+            </script>
+    <meta name="description" content="Just playing around">
+    
+    <link rel="preload" href="/assets/css/0.styles.6385a041.css" as="style"><link rel="preload" href="/assets/js/app.895ed4e9.js" as="script"><link rel="preload" href="/assets/js/3.95914fdb.js" as="script"><link rel="preload" href="/assets/js/43.9a84688e.js" as="script"><link rel="prefetch" href="/assets/js/10.2cbd8b17.js"><link rel="prefetch" href="/assets/js/11.c1a235e2.js"><link rel="prefetch" href="/assets/js/12.d2025e7a.js"><link rel="prefetch" href="/assets/js/13.e254bf74.js"><link rel="prefetch" href="/assets/js/14.9e9f6efb.js"><link rel="prefetch" href="/assets/js/15.ef44f791.js"><link rel="prefetch" href="/assets/js/16.e5d2e9df.js"><link rel="prefetch" href="/assets/js/17.3f956b27.js"><link rel="prefetch" href="/assets/js/18.f9c094e6.js"><link rel="prefetch" href="/assets/js/19.fc05b51b.js"><link rel="prefetch" href="/assets/js/2.9b65a075.js"><link rel="prefetch" href="/assets/js/20.8505ff5b.js"><link rel="prefetch" href="/assets/js/21.ebe7172f.js"><link rel="prefetch" href="/assets/js/22.eef3e3e7.js"><link rel="prefetch" href="/assets/js/23.7181ecbf.js"><link rel="prefetch" href="/assets/js/24.2b6c0010.js"><link rel="prefetch" href="/assets/js/25.caf3f5bb.js"><link rel="prefetch" href="/assets/js/26.3b75bc25.js"><link rel="prefetch" href="/assets/js/27.bea878d2.js"><link rel="prefetch" href="/assets/js/28.0c0f49c5.js"><link rel="prefetch" href="/assets/js/29.683d95e3.js"><link rel="prefetch" href="/assets/js/30.8561390f.js"><link rel="prefetch" href="/assets/js/31.c4221e03.js"><link rel="prefetch" href="/assets/js/32.6608fbc3.js"><link rel="prefetch" href="/assets/js/33.ff74b575.js"><link rel="prefetch" href="/assets/js/34.b3258288.js"><link rel="prefetch" href="/assets/js/35.fef25da4.js"><link rel="prefetch" href="/assets/js/36.cf2a616f.js"><link rel="prefetch" href="/assets/js/37.c2c4bbfc.js"><link rel="prefetch" href="/assets/js/38.2fb18e32.js"><link rel="prefetch" href="/assets/js/39.8c3a7f8c.js"><link rel="prefetch" href="/assets/js/4.9f8e471c.js"><link rel="prefetch" href="/assets/js/40.9b2fa761.js"><link rel="prefetch" href="/assets/js/41.323a699c.js"><link rel="prefetch" href="/assets/js/42.53735016.js"><link rel="prefetch" href="/assets/js/44.3498109b.js"><link rel="prefetch" href="/assets/js/45.5a6f2b65.js"><link rel="prefetch" href="/assets/js/46.421bb185.js"><link rel="prefetch" href="/assets/js/47.c745338f.js"><link rel="prefetch" href="/assets/js/48.7a8041ea.js"><link rel="prefetch" href="/assets/js/49.ee8dad9d.js"><link rel="prefetch" href="/assets/js/5.b910a0ff.js"><link rel="prefetch" href="/assets/js/50.c10fa825.js"><link rel="prefetch" href="/assets/js/51.b63438df.js"><link rel="prefetch" href="/assets/js/52.05259c08.js"><link rel="prefetch" href="/assets/js/53.5b54089d.js"><link rel="prefetch" href="/assets/js/54.477bd7e5.js"><link rel="prefetch" href="/assets/js/55.997b670a.js"><link rel="prefetch" href="/assets/js/56.2b106796.js"><link rel="prefetch" href="/assets/js/6.c298a682.js"><link rel="prefetch" href="/assets/js/7.f6d2ea29.js"><link rel="prefetch" href="/assets/js/8.008ff415.js"><link rel="prefetch" href="/assets/js/9.5d31c305.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.6385a041.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="Zorion Song" class="logo"> <span class="site-name can-hide">Zorion Song</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分类" class="dropdown-title"><span class="title">分类</span> <span class="arrow down"></span></button> <button type="button" aria-label="分类" class="mobile-dropdown-title"><span class="title">分类</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/javascript/Guide.html" class="nav-link">
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/pages/vue/Guide.html" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/pages/typescript/Guide.html" class="nav-link">
+  TypeScript
+</a></li><li class="dropdown-item"><!----> <a href="/pages/concepts/Guide.html" class="nav-link">
+  Concepts
+</a></li><li class="dropdown-item"><!----> <a href="/pages/css/Common.html" class="nav-link">
+  Css
+</a></li><li class="dropdown-item"><!----> <a href="/pages/tools/Git.html" class="nav-link">
+  Tools
+</a></li><li class="dropdown-item"><!----> <a href="/pages/links/Common.html" class="nav-link">
+  Links
+</a></li><li class="dropdown-item"><!----> <a href="/pages/error/Js.html" class="nav-link">
+  Error
+</a></li><li class="dropdown-item"><!----> <a href="/pages/db/Common.html" class="nav-link">
+  DB
+</a></li><li class="dropdown-item"><!----> <a href="/pages/code/Mobile.html" class="nav-link">
+  Code
+</a></li><li class="dropdown-item"><!----> <a href="/pages/mac/Mac Tool.html" class="nav-link">
+  Mac
+</a></li><li class="dropdown-item"><!----> <a href="/pages/windows/Windows Config To Mac.html" class="nav-link">
+  Windows
+</a></li><li class="dropdown-item"><!----> <a href="/pages/linux/Linux Command.html" class="nav-link">
+  Linux
+</a></li><li class="dropdown-item"><!----> <a href="/pages/other/Image Matrix.html" class="nav-link">
+  Other
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分类" class="dropdown-title"><span class="title">分类</span> <span class="arrow down"></span></button> <button type="button" aria-label="分类" class="mobile-dropdown-title"><span class="title">分类</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/javascript/Guide.html" class="nav-link">
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/pages/vue/Guide.html" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/pages/typescript/Guide.html" class="nav-link">
+  TypeScript
+</a></li><li class="dropdown-item"><!----> <a href="/pages/concepts/Guide.html" class="nav-link">
+  Concepts
+</a></li><li class="dropdown-item"><!----> <a href="/pages/css/Common.html" class="nav-link">
+  Css
+</a></li><li class="dropdown-item"><!----> <a href="/pages/tools/Git.html" class="nav-link">
+  Tools
+</a></li><li class="dropdown-item"><!----> <a href="/pages/links/Common.html" class="nav-link">
+  Links
+</a></li><li class="dropdown-item"><!----> <a href="/pages/error/Js.html" class="nav-link">
+  Error
+</a></li><li class="dropdown-item"><!----> <a href="/pages/db/Common.html" class="nav-link">
+  DB
+</a></li><li class="dropdown-item"><!----> <a href="/pages/code/Mobile.html" class="nav-link">
+  Code
+</a></li><li class="dropdown-item"><!----> <a href="/pages/mac/Mac Tool.html" class="nav-link">
+  Mac
+</a></li><li class="dropdown-item"><!----> <a href="/pages/windows/Windows Config To Mac.html" class="nav-link">
+  Windows
+</a></li><li class="dropdown-item"><!----> <a href="/pages/linux/Linux Command.html" class="nav-link">
+  Linux
+</a></li><li class="dropdown-item"><!----> <a href="/pages/other/Image Matrix.html" class="nav-link">
+  Other
+</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>其他</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/pages/other/Common.html" class="sidebar-link">Common</a></li><li><a href="/pages/other/Image Matrix.html" class="sidebar-link">颜色矩阵</a></li><li><a href="/pages/other/BackCompileMp.html" class="sidebar-link">反编译小程序</a></li><li><a href="/pages/other/npm.html" aria-current="page" class="active sidebar-link">npm</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/pages/other/npm.html#npm-package-开发指南-包内容篇" class="sidebar-link">npm package 开发指南-包内容篇</a></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="npm-package-开发指南-包内容篇"><a href="#npm-package-开发指南-包内容篇" class="header-anchor">#</a> npm package 开发指南-包内容篇</h2> <p>假设我们要开发一个 npm 库，名字叫 lib-dev-tutorial，那么需要包含哪些内容？我们下面就来列举下，初始化目录结构如下:</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>lib-dev-tutorial
+  ├── src -- 源码目录
+  |    └── index.js
+  ├── .gitignore
+  └── package.json
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h3 id="package-包含的内容"><a href="#package-包含的内容" class="header-anchor">#</a> package 包含的内容</h3> <p>库的使用者使用的文件</p> <p>如果开发人员安装了你的库，那么引入的时候找哪个文件？编译源码生成 dist/index.js，并在 package.json 中增加一个 main 字段指向这个文件。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>lib-dev-tutorial
+  ├── dist
+  |    └── index.js
+  ├── src -- 源码目录
+  |    └── index.js
+  ├── .gitignore
+  └── package.json
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><div class="language- line-numbers-mode"><pre class="language-text"><code>{
+  &quot;main&quot;: &quot;dist/index.js&quot;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>npm 始于 <code>node</code>，所以这个文件应该符合 <code>commonjs</code> 的模块规范。</p> <h3 id="符合-es-module-的文件"><a href="#符合-es-module-的文件" class="header-anchor">#</a> 符合 <code>ES Module</code> 的文件</h3> <p>现在支持运行原生 <code>ES Module</code> 的环境在变多，如果开发人员使用 <code>ES Module</code> 来编写程序。那么我们直接提供一个符合 <code>ES Module</code> 规范的文件，就不需要再把上一步中 <code>commonjs</code> 规范文件转成 <code>ES Module</code> 了。通过编译工具编译出使用 <code>ES Module</code> 规范的文件 <code>es/index.js</code>，并在 <code>package.json</code> 中增加一个 <code>module</code> 字段指向这个文件。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>lib-dev-tutorial
+  ├── es
+  |    └── index.js
+  ├── dist
+  |    └── index.js
+  ├── src -- 源码目录
+  |    └── index.js
+  ├── .gitignore
+  └── package.json
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><div class="custom-block tip"><p class="custom-block-title">TIP</p> <p>很多库为了把上述两步的文件语义化区分，会把 <code>dist</code> 目录改成 <code>lib</code>，我们也遵循这个习惯：</p></div> <div class="language- line-numbers-mode"><pre class="language-text"><code>lib-dev-tutorial
+  ├── es
+  |    └── index.js
+  ├── lib
+  |    └── index.js
+  ├── src -- 源码目录
+  |    └── index.js
+  ├── .gitignore
+  └── package.json
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><div class="language- line-numbers-mode"><pre class="language-text"><code>{
+  &quot;main&quot;: &quot;lib/index.js&quot;,
+  &quot;module&quot;: &quot;es/index.js&quot;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h3 id="通过-script-引用的文件"><a href="#通过-script-引用的文件" class="header-anchor">#</a> 通过 <code>script</code> 引用的文件</h3> <p>如果你希望自己的库健壮点，还可以提供 <code>umd 模式</code>的文件，让你的库可以直接在 html 上通过 script 标签引用。通过编译工具编译出文件 <code>umd/index.js</code></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>lib-dev-tutorial
+  ├── umd
+  |    └── index.js
+  ├── es
+  |    └── index.js
+  ├── lib
+  |    └── index.js
+  ├── src -- 源码目录
+  |    └── index.js
+  ├── .gitignore
+  └── package.json
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><p><code>umd/index.js</code> 要不要压缩按自己需求来决定。</p> <h3 id="类型声明文件"><a href="#类型声明文件" class="header-anchor">#</a> 类型声明文件</h3> <p><code>TypeScript</code> 的使用已经异常广泛了，我们也增加一个自己库的类型声明文件。方法有三种：</p> <p>把类型声明文件放到某一个目录下（譬如：<code>typings/index.d.ts</code>），并在 <code>package.json</code> 中增加 types 字段指向这个文件。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>lib-dev-tutorial
+  ├── umd
+  |    └── index.js
+  ├── es
+  |    └── index.js
+  ├── lib
+  |    └── index.js
+  ├── src -- 源码目录
+  |    └── index.js
+  ├── typings
+  |    └── index.d.ts
+  ├── .gitignore
+  └── package.json
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><div class="language- line-numbers-mode"><pre class="language-text"><code>{
+  &quot;main&quot;: &quot;lib/index.js&quot;,
+  &quot;module&quot;: &quot;es/index.js&quot;,
+  &quot;types&quot;: &quot;typings/index.d.ts&quot;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><div class="custom-block tip"><p class="custom-block-title">TIP</p> <p>注：<code>package.json</code> 中字段 <code>types</code> 也可以写成 <code>typings</code>，两者是等价的。</p></div> <p>在库的根目录下直接放一个 <code>index.d.ts</code>，这个文件原则上不需要在 <code>package.json</code> 指定。但是推荐所有情况都在 <code>package.json</code> 指明类型声明文件的位置。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>lib-dev-tutorial
+  ├── umd
+  |    └── index.js
+  ├── es
+  |    └── index.js
+  ├── lib
+  |    └── index.js
+  ├── src -- 源码目录
+  |    └── index.js
+  ├── index.d.ts -- 原则上无需在 package.json 声明文件位置
+  |
+  ├── .gitignore
+  └── package.json
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p>单独编写类型声明文件，发布到 npm 上的 <code>@types organization</code> 下 <code>@types/lib-dev-tutorial</code>，这种方式开发者需要单独安装类型声明文件 <code>npm install --save @types/lib-dev-tutorial</code>
+文档</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>READMD.md - 这个是作为你的库在 npm 网站上的主页。
+CHANGELOG.md
+LICENSE
+lib-dev-tutorial
+  ├── umd
+  |    └── index.js
+  ├── es
+  |    └── index.js
+  ├── lib
+  |    └── index.js
+  ├── src -- 源码目录
+  |    └── index.js
+  ├── typings
+  |    └── index.d.ts
+  |
+  ├── .gitignore
+  ├── package.json
+  ├── README.md
+  ├── CHANGELOG.md
+  └── LICENSE
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><h3 id="发布"><a href="#发布" class="header-anchor">#</a> 发布</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>package.json字段
+以下是和发布到 npm 有密切关系的字段(但不仅限于这些字段)
+
+name：库的名字。
+version：库的版本号，发布的时候读取的就是这个字段。
+author：库作者，会在 npm 网站库首页显示。
+license：开源证书，会在 npm 网站库首页显示。
+repository：代码库地址，会在 npm 网站库首页显示。
+homepage：库的主页地址，会在 npm 网站库首页显示。
+dependencies：你的库依赖的其他库，在开发者 install 你的库的时候会一并下载。
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><h4 id="scoped-库"><a href="#scoped-库" class="header-anchor">#</a> scoped 库</h4> <p>如果你的库是公开库，则直接 <code>npm publish</code> 就可以了（对了 publish 前记得 login 噢~）。</p> <p>如果你的库名是 <code>@name/subname</code>，说明你的库是 <code>scoped</code>，那么你还要做这些事情：</p> <ol><li><p>登录到 npm 网站，建立一个 @name 的组织：https://www.npmjs.com/org/create （填写 organization name 的时候 @ 符号不用填），付费还是公开按需自己的需要。首次发布，如果不先建立，是发不上去的，会报 Scope not found。</p></li> <li><p>如果你的库名是 <code>@name/subname</code>，且按公开库发布，在运行 npm 发布命令时要加参数：<code>npm publis --access public</code></p></li> <li><p>第二步中如果不加参数，请在 <code>package.json</code> 中加上如下字段：</p></li></ol> <div class="language- line-numbers-mode"><pre class="language-text"><code>{
+      &quot;publishConfig&quot;: {
+        &quot;access&quot;: &quot;public&quot;
+      }
+ }
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>和 package 无关
+最后稍微说下你会在代码库中还会包含点什么文件。</p> <h4 id="持续集成"><a href="#持续集成" class="header-anchor">#</a> 持续集成</h4> <p>使用持续集成服务，譬如 <code>travis</code>，你会有配置文件 <code>.travis.yml</code></p> <h4 id="github"><a href="#github" class="header-anchor">#</a> github</h4> <p>会有 <code>.github</code> 文件夹，下面会有些访问 <code>github</code> 如何展示 <code>issue</code> 等页面的配置文件。</p> <h4 id="其他"><a href="#其他" class="header-anchor">#</a> 其他</h4> <p>各种 <code>ignore</code> 文件，各种工程化配置文件。各种 <code>demo/example</code>，各种测试相关文件，等等等等。</p> <hr> <h3 id="npm-安装-发布-更新-撤销发布包"><a href="#npm-安装-发布-更新-撤销发布包" class="header-anchor">#</a> npm 安装 发布/更新/撤销发布包</h3> <p>发布包之前你首先要有一个 npm 的账号</p> <p>第一次发布包：
+在终端输入 <code>npm adduser</code>，提示输入账号，密码和邮箱，然后将提示创建成功</p> <p>非第一次发布包：
+在终端输入 <code>npm login</code>，然后输入你创建的账号和密码，和邮箱，登陆</p> <div class="custom-block warning"><p class="custom-block-title">WARNING</p> <ol><li><code>npm adduser</code> 成功的时候默认你已经登陆了，所以不需要再接着 <code>npm login</code>.</li> <li>不能和已有的包的名字重名！</li> <li>还有一点要注意的是 npm 对包名的限制：不能有大写字母/空格/下滑线!</li> <li>你的项目里有部分私密的代码不想发布到 npm 上？
+将它写入<code>.gitignore</code> 或<code>.npmignore</code> 中，上传就会被忽略了</li></ol></div> <h3 id="撤销发布包"><a href="#撤销发布包" class="header-anchor">#</a> 撤销发布包</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token function">npm</span> unpblish <span class="token punctuation">[</span>xxx<span class="token punctuation">]</span> --force
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><div class="custom-block tip"><p class="custom-block-title">TIP</p> <p>没有 xxx 默认撤销这个版本</p></div> <ol><li>根据规范，只有在发包的 24 小时内才允许撤销发布的包（ unpublish is only allowed with versions published in the last 24 hours）</li> <li>即使你撤销了发布的包，发包的时候也不能再和被撤销的包的名称和版本重复了（即不能名称相同，版本相同，因为这两者构成的唯一标识已经被“占用”了）</li></ol> <h3 id="npm-更新发布后的包"><a href="#npm-更新发布后的包" class="header-anchor">#</a> npm 更新发布后的包：</h3> <p>事实上 npm 更新包和发布包的命令是一样的，都是 npm publish,不同之处在于，你需要修改包的版本</p> <p>所以步骤是：</p> <ol><li><p>修改包的版本（package.json 里的 version 字段）</p></li> <li><p>npm publish</p></li></ol> <h3 id="修改版本的细节"><a href="#修改版本的细节" class="header-anchor">#</a> 修改版本的细节：</h3> <p>npm 有一套自己的版本控制标准——Semantic versioning（语义化版本）</p> <p>在我们的<code>package.json</code>里面有一个 <code>version</code>字段。那么，怎么在项目不断构建的过程中调整版本呢？</p> <p>具体体现为：</p> <p><strong>对于 <code>version:x.y.z</code></strong></p> <ol><li>修复 bug,小改动，增加 z</li> <li>增加了新特性，但仍能向后兼容，增加 y</li> <li>有很大的改动，无法向后兼容,增加 x</li></ol> <p>例如：我原本的项目是 <code>1.0.0</code> 版本的话</p> <p>若是 1 中情况，变为 <code>1.0.1</code></p> <p>若是 2 中情况，变为 <code>1.1.0</code></p> <p>若是 3 中情况，变为 <code>2.0.0</code></p> <p>通过 <code>npm version &lt;update_type&gt;</code>自动改变版本</p> <p><code>update_type</code> 为 <code>patch</code>, <code>minor</code>, or <code>major</code> 其中之一，分别表示补丁，小改，大改</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/pages/other/BackCompileMp.html" class="prev">
+        反编译小程序
+      </a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.895ed4e9.js" defer></script><script src="/assets/js/3.95914fdb.js" defer></script><script src="/assets/js/43.9a84688e.js" defer></script>
+  </body>
+</html>

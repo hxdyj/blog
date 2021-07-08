@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>nginx 配置地址转发到 tomcat | Zorion Song</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    <link rel="icon" href="/favicon.ico">
+    <script>
+      var _hmt = _hmt || []; 
+      (function() { 
+      var hm = document.createElement("script"); 
+      hm.src = "https://scdn.yourbay.net/js/gesture.js"; 
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s); 
+      })(); 
+      </script>
+    <script>
+                var _hmt = _hmt || []; 
+                var s = document.getElementsByTagName("script")[0]; 
+                (function() { 
+                var hm = document.createElement('script'); 
+                hm.text = `
+                  var src = 'https://scdn.yourbay.net/js/eruda.min.js'
+                  if (
+                    !/eruda=true/.test(window.location) &&
+                    localStorage.getItem('active-eruda') != 'true'
+                  ){}else{
+                      var hm1 = document.createElement('script'); 
+                      hm1.src = src    
+                      //document.body.appendChild(hm1)
+                      s.parentNode.insertBefore(hm1,s)
+
+                      var hm2 = document.createElement('script'); 
+                      hm2.text = 'eruda.init();'  
+                      
+                      hm1.onload = ()=>{
+                        s.parentNode.insertBefore(hm2,s)
+                      }
+                      //document.body.appendChild(hm2)
+                  }
+    
+                `; 
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s); 
+                })(); 
+            </script>
+    <meta name="description" content="Just playing around">
+    
+    <link rel="preload" href="/assets/css/0.styles.6385a041.css" as="style"><link rel="preload" href="/assets/js/app.895ed4e9.js" as="script"><link rel="preload" href="/assets/js/3.95914fdb.js" as="script"><link rel="preload" href="/assets/js/48.7a8041ea.js" as="script"><link rel="prefetch" href="/assets/js/10.2cbd8b17.js"><link rel="prefetch" href="/assets/js/11.c1a235e2.js"><link rel="prefetch" href="/assets/js/12.d2025e7a.js"><link rel="prefetch" href="/assets/js/13.e254bf74.js"><link rel="prefetch" href="/assets/js/14.9e9f6efb.js"><link rel="prefetch" href="/assets/js/15.ef44f791.js"><link rel="prefetch" href="/assets/js/16.e5d2e9df.js"><link rel="prefetch" href="/assets/js/17.3f956b27.js"><link rel="prefetch" href="/assets/js/18.f9c094e6.js"><link rel="prefetch" href="/assets/js/19.fc05b51b.js"><link rel="prefetch" href="/assets/js/2.9b65a075.js"><link rel="prefetch" href="/assets/js/20.8505ff5b.js"><link rel="prefetch" href="/assets/js/21.ebe7172f.js"><link rel="prefetch" href="/assets/js/22.eef3e3e7.js"><link rel="prefetch" href="/assets/js/23.7181ecbf.js"><link rel="prefetch" href="/assets/js/24.2b6c0010.js"><link rel="prefetch" href="/assets/js/25.caf3f5bb.js"><link rel="prefetch" href="/assets/js/26.3b75bc25.js"><link rel="prefetch" href="/assets/js/27.bea878d2.js"><link rel="prefetch" href="/assets/js/28.0c0f49c5.js"><link rel="prefetch" href="/assets/js/29.683d95e3.js"><link rel="prefetch" href="/assets/js/30.8561390f.js"><link rel="prefetch" href="/assets/js/31.c4221e03.js"><link rel="prefetch" href="/assets/js/32.6608fbc3.js"><link rel="prefetch" href="/assets/js/33.ff74b575.js"><link rel="prefetch" href="/assets/js/34.b3258288.js"><link rel="prefetch" href="/assets/js/35.fef25da4.js"><link rel="prefetch" href="/assets/js/36.cf2a616f.js"><link rel="prefetch" href="/assets/js/37.c2c4bbfc.js"><link rel="prefetch" href="/assets/js/38.2fb18e32.js"><link rel="prefetch" href="/assets/js/39.8c3a7f8c.js"><link rel="prefetch" href="/assets/js/4.9f8e471c.js"><link rel="prefetch" href="/assets/js/40.9b2fa761.js"><link rel="prefetch" href="/assets/js/41.323a699c.js"><link rel="prefetch" href="/assets/js/42.53735016.js"><link rel="prefetch" href="/assets/js/43.9a84688e.js"><link rel="prefetch" href="/assets/js/44.3498109b.js"><link rel="prefetch" href="/assets/js/45.5a6f2b65.js"><link rel="prefetch" href="/assets/js/46.421bb185.js"><link rel="prefetch" href="/assets/js/47.c745338f.js"><link rel="prefetch" href="/assets/js/49.ee8dad9d.js"><link rel="prefetch" href="/assets/js/5.b910a0ff.js"><link rel="prefetch" href="/assets/js/50.c10fa825.js"><link rel="prefetch" href="/assets/js/51.b63438df.js"><link rel="prefetch" href="/assets/js/52.05259c08.js"><link rel="prefetch" href="/assets/js/53.5b54089d.js"><link rel="prefetch" href="/assets/js/54.477bd7e5.js"><link rel="prefetch" href="/assets/js/55.997b670a.js"><link rel="prefetch" href="/assets/js/56.2b106796.js"><link rel="prefetch" href="/assets/js/6.c298a682.js"><link rel="prefetch" href="/assets/js/7.f6d2ea29.js"><link rel="prefetch" href="/assets/js/8.008ff415.js"><link rel="prefetch" href="/assets/js/9.5d31c305.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.6385a041.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="Zorion Song" class="logo"> <span class="site-name can-hide">Zorion Song</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分类" class="dropdown-title"><span class="title">分类</span> <span class="arrow down"></span></button> <button type="button" aria-label="分类" class="mobile-dropdown-title"><span class="title">分类</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/javascript/Guide.html" class="nav-link">
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/pages/vue/Guide.html" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/pages/typescript/Guide.html" class="nav-link">
+  TypeScript
+</a></li><li class="dropdown-item"><!----> <a href="/pages/concepts/Guide.html" class="nav-link">
+  Concepts
+</a></li><li class="dropdown-item"><!----> <a href="/pages/css/Common.html" class="nav-link">
+  Css
+</a></li><li class="dropdown-item"><!----> <a href="/pages/tools/Git.html" class="nav-link">
+  Tools
+</a></li><li class="dropdown-item"><!----> <a href="/pages/links/Common.html" class="nav-link">
+  Links
+</a></li><li class="dropdown-item"><!----> <a href="/pages/error/Js.html" class="nav-link">
+  Error
+</a></li><li class="dropdown-item"><!----> <a href="/pages/db/Common.html" class="nav-link">
+  DB
+</a></li><li class="dropdown-item"><!----> <a href="/pages/code/Mobile.html" class="nav-link">
+  Code
+</a></li><li class="dropdown-item"><!----> <a href="/pages/mac/Mac Tool.html" class="nav-link">
+  Mac
+</a></li><li class="dropdown-item"><!----> <a href="/pages/windows/Windows Config To Mac.html" class="nav-link">
+  Windows
+</a></li><li class="dropdown-item"><!----> <a href="/pages/linux/Linux Command.html" class="nav-link">
+  Linux
+</a></li><li class="dropdown-item"><!----> <a href="/pages/other/Image Matrix.html" class="nav-link">
+  Other
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分类" class="dropdown-title"><span class="title">分类</span> <span class="arrow down"></span></button> <button type="button" aria-label="分类" class="mobile-dropdown-title"><span class="title">分类</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/javascript/Guide.html" class="nav-link">
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/pages/vue/Guide.html" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/pages/typescript/Guide.html" class="nav-link">
+  TypeScript
+</a></li><li class="dropdown-item"><!----> <a href="/pages/concepts/Guide.html" class="nav-link">
+  Concepts
+</a></li><li class="dropdown-item"><!----> <a href="/pages/css/Common.html" class="nav-link">
+  Css
+</a></li><li class="dropdown-item"><!----> <a href="/pages/tools/Git.html" class="nav-link">
+  Tools
+</a></li><li class="dropdown-item"><!----> <a href="/pages/links/Common.html" class="nav-link">
+  Links
+</a></li><li class="dropdown-item"><!----> <a href="/pages/error/Js.html" class="nav-link">
+  Error
+</a></li><li class="dropdown-item"><!----> <a href="/pages/db/Common.html" class="nav-link">
+  DB
+</a></li><li class="dropdown-item"><!----> <a href="/pages/code/Mobile.html" class="nav-link">
+  Code
+</a></li><li class="dropdown-item"><!----> <a href="/pages/mac/Mac Tool.html" class="nav-link">
+  Mac
+</a></li><li class="dropdown-item"><!----> <a href="/pages/windows/Windows Config To Mac.html" class="nav-link">
+  Windows
+</a></li><li class="dropdown-item"><!----> <a href="/pages/linux/Linux Command.html" class="nav-link">
+  Linux
+</a></li><li class="dropdown-item"><!----> <a href="/pages/other/Image Matrix.html" class="nav-link">
+  Other
+</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>工具</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/pages/tools/Git.html" class="sidebar-link">Git</a></li><li><a href="/pages/tools/SSH.html" class="sidebar-link">SSH</a></li><li><a href="/pages/tools/Ngnix.html" aria-current="page" class="active sidebar-link">Ngnix</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/pages/tools/Ngnix.html#nginx-配置地址转发到-tomcat" class="sidebar-link">nginx 配置地址转发到 tomcat</a></li><li class="sidebar-sub-header"><a href="/pages/tools/Ngnix.html#ngnix-配置项详解" class="sidebar-link">ngnix 配置项详解</a></li></ul></li><li><a href="/pages/tools/Docker.html" class="sidebar-link">Docker</a></li><li><a href="/pages/tools/CodeServer.html" class="sidebar-link">CodeServer</a></li><li><a href="/pages/tools/EditorConfig.html" class="sidebar-link">EditorConfig</a></li><li><a href="/pages/tools/Vscode debug ts.html" class="sidebar-link">Vscode debug ts</a></li><li><a href="/pages/tools/VscodeKeyboard.html" class="sidebar-link">Vscode Keyboard</a></li><li><a href="/pages/tools/shell_bat.html" class="sidebar-link">Shell Bat</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="nginx-配置地址转发到-tomcat"><a href="#nginx-配置地址转发到-tomcat" class="header-anchor">#</a> nginx 配置地址转发到 tomcat</h2> <div class="language- line-numbers-mode"><pre class="language-text"><code>	try_files $uri $uri/ /index.html; //https://www.cnblogs.com/boundless-sky/p/9459775.html介绍这个属性的
+
+
+	location /prod-api/{
+  		proxy_set_header Host $http_host;
+  		proxy_set_header X-Real-IP $remote_addr;
+  		proxy_set_header REMOTE-HOST $remote_addr;
+  		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  		proxy_pass http://localhost:8080/atwr-park-manage-prod-api/;
+  	}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><h2 id="ngnix-配置项详解"><a href="#ngnix-配置项详解" class="header-anchor">#</a> ngnix 配置项详解</h2> <div class="language- line-numbers-mode"><pre class="language-text"><code>#安全问题，建议用nobody,不要用root.
+#user  nobody;
+
+#worker数和服务器的cpu数相等是最为适宜
+worker_processes  2;
+
+#work绑定cpu(4 work绑定4cpu)
+worker_cpu_affinity 0001 0010 0100 1000
+
+#work绑定cpu (4 work绑定8cpu中的4个) 。
+worker_cpu_affinity 0000001 00000010 00000100 00001000
+
+
+
+#error_log path(存放路径) level(日志等级)path表示日志路径，level表示日志等级，
+#具体如下：[ debug | info | notice | warn | error | crit ]
+#从左至右，日志详细程度逐级递减，即debug最详细，crit最少，默认为crit。
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+
+events {
+    #这个值是表示每个worker进程所能建立连接的最大值，所以，一个nginx能建立的最大连接数，应该是worker_connections * worker_processes。
+    #当然，这里说的是最大连接数，对于HTTP请求本地资源来说，能够支持的最大并发数量是worker_connections * worker_processes，
+    #如果是支持http1.1的浏览器每次访问要占两个连接，
+    #所以普通的静态访问最大并发数是： worker_connections * worker_processes /2，
+    #而如果是HTTP作为反向代理来说，最大并发数量应该是worker_connections * worker_processes/4。
+    #因为作为反向代理服务器，每个并发会建立与客户端的连接和与后端服务的连接，会占用两个连接。
+
+    worker_connections  1024;
+
+    #这个值是表示nginx要支持哪种多路io复用。
+    #一般的Linux选择epoll, 如果是(*BSD)系列的Linux使用kquene。
+    #windows版本的nginx不支持多路IO复用，这个值不用配。
+    use epoll;
+
+    # 当一个worker抢占到一个链接时，是否尽可能的让其获得更多的连接,默认是off 。
+    multi_accept on;
+
+    # 默认是on ,开启nginx的抢占锁机制。
+    accept_mutex  on;
+}
+
+
+http {
+    #当web服务器收到静态的资源文件请求时，依据请求文件的后缀名在服务器的MIME配置文件中找到对应的MIME Type，再根据MIME Type设置HTTP Response的Content-Type，然后浏览器根据Content-Type的值处理文件。
+
+    include       mime.types;
+
+    #如果 不能从mime.types找到映射的话，用以下作为默认值
+    default_type  application/octet-stream;
+
+
+
+     #日志位置
+     access_log  logs/host.access.log  main;
+
+     #一条典型的accesslog：
+     #101.226.166.254 - - [21/Oct/2013:20:34:28 +0800] &quot;GET /movie_cat.php?year=2013 HTTP/1.1&quot; 200 5209 &quot;http://www.baidu.com&quot; &quot;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; MDDR; .NET4.0C; .NET4.0E; .NET CLR 1.1.4322; Tablet PC 2.0); 360Spider&quot;
+
+     #1）101.226.166.254:(用户IP)
+     #2）[21/Oct/2013:20:34:28 +0800]：(访问时间)
+     #3）GET：http请求方式，有GET和POST两种
+     #4）/movie_cat.php?year=2013：当前访问的网页是动态网页，movie_cat.php即请求的后台接口，year=2013为具体接口的参数
+     #5）200：服务状态，200表示正常，常见的还有，301永久重定向、4XX表示请求出错、5XX服务器内部错误
+     #6）5209：传送字节数为5209，单位为byte
+     #7）&quot;http://www.baidu.com&quot;：refer:即当前页面的上一个网页
+     #8）&quot;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; #.NET CLR 3.0.30729; Media Center PC 6.0; MDDR; .NET4.0C; .NET4.0E; .NET CLR 1.1.4322; Tablet PC 2.0); 360Spider&quot;： agent字段：通常用来记录操作系统、浏览器版本、浏览器内核等信息
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] &quot;$request&quot; '
+                       '$status $body_bytes_sent &quot;$http_referer&quot; '
+                      '&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;';
+
+
+
+    #开启从磁盘直接到网络的文件传输，适用于有大文件上传下载的情况，提高IO效率。
+    sendfile        on;
+
+
+    #一个请求完成之后还要保持连接多久, 默认为0，表示完成请求后直接关闭连接。
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+
+
+    #开启或者关闭gzip模块
+    #gzip  on ;
+
+    #设置允许压缩的页面最小字节数，页面字节数从header头中的Content-Length中进行获取。
+    #gzip_min_lenth 1k;
+
+    # gzip压缩比，1 压缩比最小处理速度最快，9 压缩比最大但处理最慢（传输快但比较消耗cpu）
+    #gzip_comp_level 4;
+
+    #匹配MIME类型进行压缩，（无论是否指定）&quot;text/html&quot;类型总是会被压缩的。
+    #gzip_types types text/plain text/css application/json  application/x-javascript text/xml
+
+
+
+    #动静分离
+    #服务器端静态资源缓存，最大缓存到内存中的文件，不活跃期限
+    open_file_cache max=655350 inactive=20s;
+
+    #活跃期限内最少使用的次数，否则视为不活跃。
+    open_file_cache_min_uses 2;
+
+    #验证缓存是否活跃的时间间隔
+    open_file_cache_valid 30s;
+
+
+
+    upstream myserver{
+
+    # 1、轮询（默认）
+    # 每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。
+    # 2、指定权重
+    # 指定轮询几率，weight和访问比率成正比，用于后端服务器性能不均的情况。
+    #3、IP绑定 ip_hash
+    # 每个请求按访问ip的hash结果分配，这样每个访客固定访问一个后端服务器，可以解决session的问题。
+    #4、备机方式 backup
+    # 正常情况不访问设定为backup的备机，只有当所有非备机全都宕机的情况下，服务才会进备机。
+    #5、fair（第三方）
+    #按后端服务器的响应时间来分配请求，响应时间短的优先分配。
+    #6、url_hash（第三方）
+    #按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，后端服务器为缓存时比较有效。
+
+
+      # ip_hash;
+             server 192.168.161.132:8080 weight=1;
+             server 192.168.161.132:8081 weight=1;
+
+      #fair
+
+      #hash $request_uri
+      #hash_method crc32
+
+      }
+
+    server {
+        #监听端口号
+        listen       80;
+
+        #服务名
+        server_name  192.168.161.130;
+
+        #字符集
+        #charset utf-8;
+
+
+
+
+	#location [=|~|~*|^~] /uri/ { … }
+	# = 精确匹配
+	# ~ 正则匹配，区分大小写
+	# ~* 正则匹配，不区分大小写
+	# ^~  关闭正则匹配
+
+	#匹配原则：
+
+	# 1、所有匹配分两个阶段，第一个叫普通匹配，第二个叫正则匹配。
+	# 2、普通匹配，首先通过“=”来匹配完全精确的location
+        #   2.1、 如果没有精确匹配到， 那么按照最大前缀匹配的原则，来匹配location
+        #   2.2、 如果匹配到的location有^~,则以此location为匹配最终结果，如果没有那么会把匹配的结果暂存，继续进行正则匹配。
+        # 3、正则匹配，依次从上到下匹配前缀是~或~*的location, 一旦匹配成功一次，则立刻以此location为准，不再向下继续进行正则匹配。
+        # 4、如果正则匹配都不成功，则继续使用之前暂存的普通匹配成功的location.
+
+
+        location / {   # 匹配任何查询，因为所有请求都已 / 开头。但是正则表达式规则和长的块规则将被优先和查询匹配。
+
+	    #定义服务器的默认网站根目录位置
+            root   html;
+
+	    #默认访问首页索引文件的名称
+	    index  index.html index.htm;
+
+	    #反向代理路径
+            proxy_pass http://myserver;
+
+	    #反向代理的超时时间
+            proxy_connect_timeout 10;
+
+            proxy_redirect default;
+
+         }
+
+         location  /images/ {
+	    root images ;
+	 }
+
+	 location ^~ /images/jpg/ {  # 匹配任何已 /images/jpg/ 开头的任何查询并且停止搜索。任何正则表达式将不会被测试。
+	    root images/jpg/ ;
+
+
+	 }
+         location ~*.(gif|jpg|jpeg)$ {
+
+	      #所有静态文件直接读取硬盘
+              root pic ;
+
+	      #expires定义用户浏览器缓存的时间为3天，如果静态页面不常更新，可以设置更长，这样可以节省带宽和缓解服务器的压力
+              expires 3d; #缓存3天
+         }
+
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+
+    }
+
+
+
+}
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br><span class="line-number">133</span><br><span class="line-number">134</span><br><span class="line-number">135</span><br><span class="line-number">136</span><br><span class="line-number">137</span><br><span class="line-number">138</span><br><span class="line-number">139</span><br><span class="line-number">140</span><br><span class="line-number">141</span><br><span class="line-number">142</span><br><span class="line-number">143</span><br><span class="line-number">144</span><br><span class="line-number">145</span><br><span class="line-number">146</span><br><span class="line-number">147</span><br><span class="line-number">148</span><br><span class="line-number">149</span><br><span class="line-number">150</span><br><span class="line-number">151</span><br><span class="line-number">152</span><br><span class="line-number">153</span><br><span class="line-number">154</span><br><span class="line-number">155</span><br><span class="line-number">156</span><br><span class="line-number">157</span><br><span class="line-number">158</span><br><span class="line-number">159</span><br><span class="line-number">160</span><br><span class="line-number">161</span><br><span class="line-number">162</span><br><span class="line-number">163</span><br><span class="line-number">164</span><br><span class="line-number">165</span><br><span class="line-number">166</span><br><span class="line-number">167</span><br><span class="line-number">168</span><br><span class="line-number">169</span><br><span class="line-number">170</span><br><span class="line-number">171</span><br><span class="line-number">172</span><br><span class="line-number">173</span><br><span class="line-number">174</span><br><span class="line-number">175</span><br><span class="line-number">176</span><br><span class="line-number">177</span><br><span class="line-number">178</span><br><span class="line-number">179</span><br><span class="line-number">180</span><br><span class="line-number">181</span><br><span class="line-number">182</span><br><span class="line-number">183</span><br><span class="line-number">184</span><br><span class="line-number">185</span><br><span class="line-number">186</span><br><span class="line-number">187</span><br><span class="line-number">188</span><br><span class="line-number">189</span><br><span class="line-number">190</span><br><span class="line-number">191</span><br><span class="line-number">192</span><br><span class="line-number">193</span><br><span class="line-number">194</span><br><span class="line-number">195</span><br><span class="line-number">196</span><br><span class="line-number">197</span><br><span class="line-number">198</span><br><span class="line-number">199</span><br><span class="line-number">200</span><br><span class="line-number">201</span><br><span class="line-number">202</span><br><span class="line-number">203</span><br><span class="line-number">204</span><br><span class="line-number">205</span><br><span class="line-number">206</span><br><span class="line-number">207</span><br><span class="line-number">208</span><br><span class="line-number">209</span><br><span class="line-number">210</span><br><span class="line-number">211</span><br><span class="line-number">212</span><br><span class="line-number">213</span><br><span class="line-number">214</span><br><span class="line-number">215</span><br><span class="line-number">216</span><br><span class="line-number">217</span><br><span class="line-number">218</span><br><span class="line-number">219</span><br><span class="line-number">220</span><br><span class="line-number">221</span><br><span class="line-number">222</span><br><span class="line-number">223</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/pages/tools/SSH.html" class="prev">
+        SSH
+      </a></span> <span class="next"><a href="/pages/tools/Docker.html">
+        Docker
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.895ed4e9.js" defer></script><script src="/assets/js/3.95914fdb.js" defer></script><script src="/assets/js/48.7a8041ea.js" defer></script>
+  </body>
+</html>

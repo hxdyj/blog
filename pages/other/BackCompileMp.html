@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>反编译小程序 | Zorion Song</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    <link rel="icon" href="/favicon.ico">
+    <script>
+      var _hmt = _hmt || []; 
+      (function() { 
+      var hm = document.createElement("script"); 
+      hm.src = "https://scdn.yourbay.net/js/gesture.js"; 
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s); 
+      })(); 
+      </script>
+    <script>
+                var _hmt = _hmt || []; 
+                var s = document.getElementsByTagName("script")[0]; 
+                (function() { 
+                var hm = document.createElement('script'); 
+                hm.text = `
+                  var src = 'https://scdn.yourbay.net/js/eruda.min.js'
+                  if (
+                    !/eruda=true/.test(window.location) &&
+                    localStorage.getItem('active-eruda') != 'true'
+                  ){}else{
+                      var hm1 = document.createElement('script'); 
+                      hm1.src = src    
+                      //document.body.appendChild(hm1)
+                      s.parentNode.insertBefore(hm1,s)
+
+                      var hm2 = document.createElement('script'); 
+                      hm2.text = 'eruda.init();'  
+                      
+                      hm1.onload = ()=>{
+                        s.parentNode.insertBefore(hm2,s)
+                      }
+                      //document.body.appendChild(hm2)
+                  }
+    
+                `; 
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s); 
+                })(); 
+            </script>
+    <meta name="description" content="Just playing around">
+    
+    <link rel="preload" href="/assets/css/0.styles.6385a041.css" as="style"><link rel="preload" href="/assets/js/app.895ed4e9.js" as="script"><link rel="preload" href="/assets/js/3.95914fdb.js" as="script"><link rel="preload" href="/assets/js/40.9b2fa761.js" as="script"><link rel="prefetch" href="/assets/js/10.2cbd8b17.js"><link rel="prefetch" href="/assets/js/11.c1a235e2.js"><link rel="prefetch" href="/assets/js/12.d2025e7a.js"><link rel="prefetch" href="/assets/js/13.e254bf74.js"><link rel="prefetch" href="/assets/js/14.9e9f6efb.js"><link rel="prefetch" href="/assets/js/15.ef44f791.js"><link rel="prefetch" href="/assets/js/16.e5d2e9df.js"><link rel="prefetch" href="/assets/js/17.3f956b27.js"><link rel="prefetch" href="/assets/js/18.f9c094e6.js"><link rel="prefetch" href="/assets/js/19.fc05b51b.js"><link rel="prefetch" href="/assets/js/2.9b65a075.js"><link rel="prefetch" href="/assets/js/20.8505ff5b.js"><link rel="prefetch" href="/assets/js/21.ebe7172f.js"><link rel="prefetch" href="/assets/js/22.eef3e3e7.js"><link rel="prefetch" href="/assets/js/23.7181ecbf.js"><link rel="prefetch" href="/assets/js/24.2b6c0010.js"><link rel="prefetch" href="/assets/js/25.caf3f5bb.js"><link rel="prefetch" href="/assets/js/26.3b75bc25.js"><link rel="prefetch" href="/assets/js/27.bea878d2.js"><link rel="prefetch" href="/assets/js/28.0c0f49c5.js"><link rel="prefetch" href="/assets/js/29.683d95e3.js"><link rel="prefetch" href="/assets/js/30.8561390f.js"><link rel="prefetch" href="/assets/js/31.c4221e03.js"><link rel="prefetch" href="/assets/js/32.6608fbc3.js"><link rel="prefetch" href="/assets/js/33.ff74b575.js"><link rel="prefetch" href="/assets/js/34.b3258288.js"><link rel="prefetch" href="/assets/js/35.fef25da4.js"><link rel="prefetch" href="/assets/js/36.cf2a616f.js"><link rel="prefetch" href="/assets/js/37.c2c4bbfc.js"><link rel="prefetch" href="/assets/js/38.2fb18e32.js"><link rel="prefetch" href="/assets/js/39.8c3a7f8c.js"><link rel="prefetch" href="/assets/js/4.9f8e471c.js"><link rel="prefetch" href="/assets/js/41.323a699c.js"><link rel="prefetch" href="/assets/js/42.53735016.js"><link rel="prefetch" href="/assets/js/43.9a84688e.js"><link rel="prefetch" href="/assets/js/44.3498109b.js"><link rel="prefetch" href="/assets/js/45.5a6f2b65.js"><link rel="prefetch" href="/assets/js/46.421bb185.js"><link rel="prefetch" href="/assets/js/47.c745338f.js"><link rel="prefetch" href="/assets/js/48.7a8041ea.js"><link rel="prefetch" href="/assets/js/49.ee8dad9d.js"><link rel="prefetch" href="/assets/js/5.b910a0ff.js"><link rel="prefetch" href="/assets/js/50.c10fa825.js"><link rel="prefetch" href="/assets/js/51.b63438df.js"><link rel="prefetch" href="/assets/js/52.05259c08.js"><link rel="prefetch" href="/assets/js/53.5b54089d.js"><link rel="prefetch" href="/assets/js/54.477bd7e5.js"><link rel="prefetch" href="/assets/js/55.997b670a.js"><link rel="prefetch" href="/assets/js/56.2b106796.js"><link rel="prefetch" href="/assets/js/6.c298a682.js"><link rel="prefetch" href="/assets/js/7.f6d2ea29.js"><link rel="prefetch" href="/assets/js/8.008ff415.js"><link rel="prefetch" href="/assets/js/9.5d31c305.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.6385a041.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="Zorion Song" class="logo"> <span class="site-name can-hide">Zorion Song</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分类" class="dropdown-title"><span class="title">分类</span> <span class="arrow down"></span></button> <button type="button" aria-label="分类" class="mobile-dropdown-title"><span class="title">分类</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/javascript/Guide.html" class="nav-link">
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/pages/vue/Guide.html" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/pages/typescript/Guide.html" class="nav-link">
+  TypeScript
+</a></li><li class="dropdown-item"><!----> <a href="/pages/concepts/Guide.html" class="nav-link">
+  Concepts
+</a></li><li class="dropdown-item"><!----> <a href="/pages/css/Common.html" class="nav-link">
+  Css
+</a></li><li class="dropdown-item"><!----> <a href="/pages/tools/Git.html" class="nav-link">
+  Tools
+</a></li><li class="dropdown-item"><!----> <a href="/pages/links/Common.html" class="nav-link">
+  Links
+</a></li><li class="dropdown-item"><!----> <a href="/pages/error/Js.html" class="nav-link">
+  Error
+</a></li><li class="dropdown-item"><!----> <a href="/pages/db/Common.html" class="nav-link">
+  DB
+</a></li><li class="dropdown-item"><!----> <a href="/pages/code/Mobile.html" class="nav-link">
+  Code
+</a></li><li class="dropdown-item"><!----> <a href="/pages/mac/Mac Tool.html" class="nav-link">
+  Mac
+</a></li><li class="dropdown-item"><!----> <a href="/pages/windows/Windows Config To Mac.html" class="nav-link">
+  Windows
+</a></li><li class="dropdown-item"><!----> <a href="/pages/linux/Linux Command.html" class="nav-link">
+  Linux
+</a></li><li class="dropdown-item"><!----> <a href="/pages/other/Image Matrix.html" class="nav-link">
+  Other
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分类" class="dropdown-title"><span class="title">分类</span> <span class="arrow down"></span></button> <button type="button" aria-label="分类" class="mobile-dropdown-title"><span class="title">分类</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/javascript/Guide.html" class="nav-link">
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/pages/vue/Guide.html" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/pages/typescript/Guide.html" class="nav-link">
+  TypeScript
+</a></li><li class="dropdown-item"><!----> <a href="/pages/concepts/Guide.html" class="nav-link">
+  Concepts
+</a></li><li class="dropdown-item"><!----> <a href="/pages/css/Common.html" class="nav-link">
+  Css
+</a></li><li class="dropdown-item"><!----> <a href="/pages/tools/Git.html" class="nav-link">
+  Tools
+</a></li><li class="dropdown-item"><!----> <a href="/pages/links/Common.html" class="nav-link">
+  Links
+</a></li><li class="dropdown-item"><!----> <a href="/pages/error/Js.html" class="nav-link">
+  Error
+</a></li><li class="dropdown-item"><!----> <a href="/pages/db/Common.html" class="nav-link">
+  DB
+</a></li><li class="dropdown-item"><!----> <a href="/pages/code/Mobile.html" class="nav-link">
+  Code
+</a></li><li class="dropdown-item"><!----> <a href="/pages/mac/Mac Tool.html" class="nav-link">
+  Mac
+</a></li><li class="dropdown-item"><!----> <a href="/pages/windows/Windows Config To Mac.html" class="nav-link">
+  Windows
+</a></li><li class="dropdown-item"><!----> <a href="/pages/linux/Linux Command.html" class="nav-link">
+  Linux
+</a></li><li class="dropdown-item"><!----> <a href="/pages/other/Image Matrix.html" class="nav-link">
+  Other
+</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>其他</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/pages/other/Common.html" class="sidebar-link">Common</a></li><li><a href="/pages/other/Image Matrix.html" class="sidebar-link">颜色矩阵</a></li><li><a href="/pages/other/BackCompileMp.html" aria-current="page" class="active sidebar-link">反编译小程序</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/pages/other/BackCompileMp.html#反编译小程序" class="sidebar-link">反编译小程序</a></li></ul></li><li><a href="/pages/other/npm.html" class="sidebar-link">npm</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="反编译小程序"><a href="#反编译小程序" class="header-anchor">#</a> 反编译小程序</h2> <ol><li>下载反编译脚本</li></ol> <p>最新下载地址：https://github.com/gudqs7/wxappUnpacker</p> <p>用 cd 命令进入到你 clone 或者下载好的反编译脚本目录下，下载好后将 wxappUnpacker.zip 文件解压出来，这是 GitHub 上一位大神的杰作，找到了这个比较好用的，其他版本也可以。</p> <ol start="2"><li>夜神模拟器</li></ol> <p>用来找寻微信小程序源文件，真机当然也可以，但麻烦，又是 root 权限，又是越狱的，夜神模拟器方便，直接在设置里就可以设置超级用户权限，超级权限拿到，就可以为所欲为了，通过下面这个 RE 文件管理器看到微信小程序源文件。</p> <ol start="3"><li>RE 文件管理器</li></ol> <p>（在模拟器内搜索安装或自动下载后导入到摸拟器安装）用来找寻微信小程序源文件。</p> <h3 id="编译流程"><a href="#编译流程" class="header-anchor">#</a> 编译流程</h3> <ol><li>安装 RE 文件管理器</li></ol> <p>在模拟器内安装好 RE 文件管理器（可以在摸拟器上直接搜索“RE 文件管理器”进行安装）。</p> <ol start="2"><li>获取超级用户权限</li></ol> <p>打开手机设置-&gt;找到超级用户-&gt;右上角三个小点点击一下，设置-&gt;点击‘超级用户访问权限’，选择‘仅限于应用’，这样超级用户权限就拿到了。</p> <p>或者在首次打开 RE 文件管理器进入 data 文件夹时，摸拟器会显示超级用户请求，选择“永久记住选择”—&gt;点击“允许”，即可获取超级用户权限。</p> <ol start="3"><li>打开需要反编译的小程序</li></ol> <p>打开微信，没有的在应用市场下载就行，打开想反编译的微信小程序，小程序打开后，可以切换到 RE 文件管理器去找源文件了。</p> <p>这里有一个机制，当点开一个微信小程序，如果本地这个文件夹下找到即将运行的小程序，会从微信服务器下载到本地，在以后的某个时刻又运行这个小程序，运行时，微信服务器会通知有没有小程序新版本，如有新版本，会在后台静默下载，小程序继续运行，新版本要到下一次运行才会启用，这就是微信小程序的更新机制。</p> <ol start="4"><li>获取源文件</li></ol> <p>打开 RE 文件管理器，从根目录开始。/data/data/com.tencent.mm/MicroMsg/.../appbrand/pkg/，路径中有一段...，这里表示不确定具体一个，一般是很长的数字和字母组成的文件</p> <p>反正就在这个 MicroMsg 下的其中一个文件夹，紧接着会看到 appbrand 文件夹，如果这样那就找到位置了。</p> <p>找到源文件后，长按左键 -&gt; 点击右上角三个小点，打开菜单，选择‘压缩所选文件’-&gt;完成后，点击查看-&gt;长按，还是右上角，将压缩包从模拟器发送出来到电脑上，方式多种，随意。下图是以 QQ 方式发送。</p> <ol start="5"><li>下载反编译文件</li></ol> <p>从 GitHub 下载反编译文件后，在桌面就有了这样的文件夹结构 nimi-yuan 这个文件夹下这里放的是微信小程序源文件</p> <p>lib 这个文件夹下放的是反编译脚本</p> <ol start="6"><li>安装依赖包</li></ol> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment"># cmd 在终端进入到你刚刚下载下来的脚本目录下，依次安装以下依赖，全部安装完。</span>
+
+<span class="token function">npm</span> <span class="token function">install</span> esprima
+
+<span class="token function">npm</span> <span class="token function">install</span> css-tree
+
+<span class="token function">npm</span> <span class="token function">install</span> cssbeautify
+
+<span class="token function">npm</span> <span class="token function">install</span> vm2
+
+<span class="token function">npm</span> <span class="token function">install</span> uglify-es
+
+<span class="token function">npm</span> <span class="token function">install</span> js-beautify
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p>安装好依赖之后，就是最后一步了，反编译 .wxapkg 文件</p> <p>例如：我有一个需要反编译的文件_163200311_32.wxapkg 已经解压到了 D 盘根目录下,那么就输出命令</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>node .\wuWxapkg.js D:\_163200311_32.wxapkg
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>7.反编译完成</p> <p>用 node wuWxapkg.js filepath 执行成功后，查看反编译成功后的文件夹，源码中除了 project.config.json 这个配置文件，其他的都有。导入项目后就可以看到效果了，期间可能会出现一些问题，需要调试一下。</p> <h3 id="结语"><a href="#结语" class="header-anchor">#</a> 结语</h3> <p>至此微信小程序的反编译过程就结束了，仅供学习之用，不可它用。由此可见微信小程序源码的安全性不好，过不久估计就不能这么干了，漏洞终究会被填补的。</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/pages/other/Image Matrix.html" class="prev">
+        颜色矩阵
+      </a></span> <span class="next"><a href="/pages/other/npm.html">
+        npm
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.895ed4e9.js" defer></script><script src="/assets/js/3.95914fdb.js" defer></script><script src="/assets/js/40.9b2fa761.js" defer></script>
+  </body>
+</html>
